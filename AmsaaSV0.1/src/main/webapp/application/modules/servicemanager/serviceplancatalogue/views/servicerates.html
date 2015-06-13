@@ -1,0 +1,114 @@
+<table id="child" class="table table-bordered"
+       style="font-size: 80%; width: auto; left: 5%;">
+    <thead style="white-space: nowrap;">
+    <tr>
+        <th>Sl#</th>
+        <th>Service Code</th>
+        <th>Service Description</th>
+        <th>Charge Name</th>
+        <th>Charge Type</th>
+        <th>Charge Rate</th>
+        <th>Charge Frequency</th>
+        <th colspan="3" style="text-align: center;">Action</th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach:srvcRatePagedGridView.pagedRecordsList">
+    <tr>
+        <td data-bind="text:$index()+1"></td>
+        <td>
+            <div data-bind="ifnot:viewModel.isIdEditable()">
+                <span data-bind="text:dataModel.service().srvcCode"></span>
+            </div>
+            <div data-bind="if:viewModel.isIdEditable()">
+                <select style="font-size: 80%; width: auto;"
+                        data-bind="options:$root.srvcList,optionsText:'srvcCode',optionsCaption:'ServiceCode',value:dataModel.service,if:viewModel.isIdEditable()"
+                        style="border:none;">
+                </select>
+            </div>
+        </td>
+        <td data-bind="with:dataModel.service">
+            <span data-bind="text:srvcDescription"></span>
+        </td>
+        <td><textarea rows="2" cols="15"
+                      data-bind='value:dataModel.chargeName,enable:viewModel.isEditable'
+                      style="font-size: 80%"></textarea></td>
+        <td><select
+                data-bind="options:$root.chargeTypeList,optionsCaption:dataModel.chargeType,value:dataModel.chargeType,visible:viewModel.isEditable()"
+                style="font-size: 80%; width: auto;">
+        </select> <span
+                data-bind="text:dataModel.chargeType,visible:!viewModel.isEditable()"></span>
+        </td>
+        <td>
+            <div data-bind="visible:!viewModel.isEditable()">
+                <span data-bind="text:dataModel.chargeAmount"></span> <span
+                    data-bind="text:dataModel.chargeCurrency"></span> /<span
+                    data-bind="text:dataModel.chargeUnit"></span>
+            </div>
+            <div data-bind="visible:viewModel.isEditable()">
+                <input data-bind='value:dataModel.chargeAmount'
+                       style="width: auto;" size="7"/> <select
+                    style="font-size: 80%; width: auto;"
+                    data-bind="options:$root.currencyList,optionsCaption:dataModel.chargeCurrency,value:dataModel.chargeCurrency">
+            </select>/<select style="font-size: 80%; width: auto;"
+                              data-bind="options:$root.unitsList,optionsCaption:'Units',value:dataModel.chargeUnit"></select>
+            </div>
+        </td>
+        <td><select
+                data-bind="options:$root.frequencyList,optionsCaption:dataModel.chargeFrequency,value:dataModel.chargeFrequency,visible:viewModel.isEditable()"
+                style="font-size: 80%; width: auto;"></select> <span
+                data-bind="text:dataModel.chargeFrequency,visible:!viewModel.isEditable()"></span>
+        </td>
+        <td>
+            <button id="edit" data-bind="click:viewModel.isEditable"
+                    title="Edit">
+                <span class="icon-edit" data-bind="visible:viewModel.isEditable"></span>
+					<span class="icon-folder-close"
+                          data-bind="visible:!viewModel.isEditable()"></span>
+            </button>
+        </td>
+        <td>
+            <button id="save" title="Save Changes!"
+                    data-bind="click:$parent.saveServiceRate">
+                <span class="icon-ok"></span>
+            </button>
+        </td>
+        <td>
+            <button id="delete" title="Delete"
+                    data-bind="click:$parent.deleteServiceRate">
+                <span class="icon-trash"></span>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td colspan="10" class="pagination pagination-centered">
+
+            <button title="Add new ServiceRate" style="margin: -30px 0 0 25px"
+                    data-bind="click:addServiceRate">
+                <span class="icon-plus"></span>
+            </button>
+            <span style="margin: -5% 0 0 10%">Records/Page:</span>
+            <select
+                    id="records" style="margin-top: -20px;" title="records"
+                    data-bind="options:srvcRatePagedGridView.recsPerPageOptions,value:srvcRatePagedGridView.chosenRecsPerPageOption"></select>
+
+            <ul class="pagination-centered">
+                <li><a href="#"
+                       data-bind="click:srvcRatePagedGridView.moveToPrevPage">&laquo;</a></li>
+            </ul>
+            <ul class="pagination-centered"
+                data-bind="foreach:new Array(srvcRatePagedGridView.noOfPages())">
+                <li><a href="#"
+                       data-bind="text:$index()+1,click:function(){$parent.srvcRatePagedGridView.moveToPage($index()+1)}"></a>
+                </li>
+            </ul>
+            <ul class="pagination-centered">
+                <li><a href="#"
+                       data-bind="click:srvcRatePagedGridView.moveToNextPage">&raquo;</a></li>
+            </ul>
+
+        </td>
+    </tr>
+    </tbody>
+</table>

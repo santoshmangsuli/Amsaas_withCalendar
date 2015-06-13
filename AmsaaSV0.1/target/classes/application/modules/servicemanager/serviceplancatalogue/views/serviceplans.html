@@ -1,0 +1,78 @@
+<table id="srvcPlanMgrTable" class="table table-striped gridTable" style="width:96%;">
+    <thead>
+    <tr>
+        <th>Sl#</th>
+        <th>SERVICE PLAN NAME</th>
+        <th>SERVICE PLAN CREATION DATE</th>
+        <th colspan="3">ACTION</th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach:srvcPlanPagedGridView.pagedRecordsList">
+    <tr>
+        <td><a data-toggle="collapse" class="accordion-toggle"
+               data-bind="attr:{'data-target':'#'+dataModel.srvcPlanName(),'href':'#serviceplans/'+dataModel.srvcPlanName()+'/servicerates'},text:$index()+1">
+        </a></td>
+        <td><input
+                data-bind='value:dataModel.srvcPlanName,hasFocus:viewModel.isSelected,enable:viewModel.isIdEditable'></input>
+        </td>
+        <td><input
+                data-bind="datepicker:dataModel.srvcPlanCreatDate,enable:viewModel.isEditable"/></td>
+        <td>
+            <button id="edit" data-bind="click:viewModel.isEditable"
+                    title="Edit">
+                <span class="icon-edit" data-bind="visible:viewModel.isEditable"></span>
+					<span class="icon-folder-close"
+                          data-bind="visible:!viewModel.isEditable()"></span>
+            </button>
+        </td>
+        <td>
+            <button id="save" data-bind="click:$parent.saveServicePlan"
+                    title="Save Changes!">
+                <span class="icon-ok"></span>
+            </button>
+        </td>
+        <td>
+            <button id="delete" data-bind="click:$parent.deleteServicePlan"
+                    title="Delete">
+                <span class="icon-trash"></span>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6" style="padding:0px;border: none;">
+            <div class="accordian-body collapse"
+                 data-bind="attr:{'id':dataModel.srvcPlanName()}"></div>
+        </td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td colspan="7">
+            <button data-bind="click:addNewServicePlan" title="Add new Service"
+                    class="btn btn-success">Add Service Plan
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="7" class="pagination pagination-centered"><span
+                style="margin: 0 0 0 5px;">Records/Page:<select id="records"
+                                                                data-bind="options:srvcPlanPagedGridView.recsPerPageOptions,value:srvcPlanPagedGridView.chosenRecsPerPageOption"></select></span>
+            <ul class="pagination-centered">
+                <li><a href="#"
+                       data-bind="click:srvcPlanPagedGridView.moveToPrevPage">&laquo;</a></li>
+            </ul>
+            <ul class="pagination-centered"
+                data-bind="foreach:new Array(srvcPlanPagedGridView.noOfPages())">
+                <li><a href="#"
+                       data-bind="text:$index()+1,click:function(){$parent.srvcPlanPagedGridView.moveToPage($index()+1)}"></a>
+                </li>
+            </ul>
+            <ul class="pagination-centered">
+                <li><a href="#"
+                       data-bind="click:srvcPlanPagedGridView.moveToNextPage">&raquo;</a></li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
