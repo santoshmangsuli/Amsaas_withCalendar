@@ -29,6 +29,8 @@ public interface BillRepository
 
 	public Set<Payment> findPayments(long billNumber);
 
+	public List<Payment> findPayments();
+	
 	public List<Bill> findBillsByPaymentStatus();
 
 }

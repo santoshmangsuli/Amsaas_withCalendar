@@ -44,7 +44,7 @@ define(function(require) {
 					billPeriodToDate : data.Bill().billPeriodToDate(),
 					billTotalTax		: data.Bill().billTotalTax(),
 					billTotalAmount	 : data.Bill().billTotalAmount(),
-					customerId : data.Bill().billCustomer().chosenFlatNumber(),
+					customerId : data.Bill().billCustomer().persnId(),
 					billLineItems : data.Bill().genBillItems(data.Bill())
 			
 

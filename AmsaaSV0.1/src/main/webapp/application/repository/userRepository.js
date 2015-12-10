@@ -49,6 +49,14 @@ define(function(require) {
 				data :ko.toJSON(billDTO),
 				dataType : "json",
 				contentType : "application/json; charset=utf-8"});
+		},
+		getUserByFlatNum : function(usermodel){
+			console.log("persnId "+JSON.stringify(usermodel.persnFlatNum));
+			return	$.ajax({
+				url : "user/flatNum/"+usermodel.persnFlatNum,
+				type : "POST",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8"});	
 		}
 
 	};

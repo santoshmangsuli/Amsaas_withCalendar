@@ -20,7 +20,7 @@ import com.ams.domain.repository.ServiceRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:com/ams/infrastructure/configuration/ApplicationContext.xml" })
 @Transactional
-@TransactionConfiguration(transactionManager = "txManager_Jpa",defaultRollback = true)
+@TransactionConfiguration(transactionManager = "txManager_Jpa")
 public class ServiceRepositoryImpl_JPA_Test
 {
 	private Service			srvc;

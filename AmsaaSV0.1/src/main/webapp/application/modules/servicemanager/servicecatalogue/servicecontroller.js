@@ -44,7 +44,9 @@ define(function (require) {
         },
 
         saveService: function (data) {
+            console.log("saveService"+JSON.stringify(data));
             if (data !== "") {
+            	console.log("data !== blank");
                 if (data.viewModel.isIdEditable() === true) {
                     console.log("Persist to Repo");
                     data.viewModel.isIdEditable(false);
@@ -53,6 +55,7 @@ define(function (require) {
                         console.log(serverData);
                     });
                 } else if (data === "") {
+                	console.log("data === blank");
 
                 } else {
                     console.log("Updating service plan");

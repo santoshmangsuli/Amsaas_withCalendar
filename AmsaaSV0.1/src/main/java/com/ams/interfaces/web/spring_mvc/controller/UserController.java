@@ -37,6 +37,19 @@ public class UserController
 
 	}
 
+
+	@RequestMapping(value = "user/flatNum/{flatNumber}",method = RequestMethod.POST)
+	@ResponseBody
+	public Person getUserDetailByFlatNumber(@PathVariable Long flatNumber) throws
+															ServiceException
+	{
+		System.out.println("FlatNumber : " + flatNumber);
+		return manageUser.getUserDetailsByFlatNumber(flatNumber);
+
+	}
+	
+	
+	
 	@RequestMapping(value = "user",method = RequestMethod.POST)
 	@ResponseBody
 	public String saveUser(@RequestBody final Person user) throws ServiceException

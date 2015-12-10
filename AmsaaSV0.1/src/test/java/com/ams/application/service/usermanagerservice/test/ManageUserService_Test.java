@@ -8,8 +8,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ams.application.service.usermanagerservice.ManageUser;
 import com.ams.domain.model.person.Address;
+import com.ams.domain.model.person.Authorisation;
 import com.ams.domain.model.person.Person;
 import com.ams.domain.model.person.PersonDetail;
+import com.ams.domain.model.person.PersonRole;
 
 public class ManageUserService_Test
 {
@@ -87,7 +89,12 @@ public class ManageUserService_Test
 		roles.add("User");
 		roles.add("Flat_Resident");
 
-		p.setPersnRoles(roles);
+		PersonRole pr = new PersonRole();
+		pr.setRoleName("Tenanat");
+		
+		Collection<String> persnRoles = new ArrayList<String>(2);
+		persnRoles.add("Tenanat");
+		p.setPersnRoles(persnRoles);
 		return p;
 	}
 

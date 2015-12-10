@@ -9,5 +9,7 @@ public interface PersonRepository extends Repository<Person, Long>
 {
 
 	public List<Person> findAllByIds(long[] personIds);
+	
+	public Person findByFlatNumber(Long flatNumber);
 
 }

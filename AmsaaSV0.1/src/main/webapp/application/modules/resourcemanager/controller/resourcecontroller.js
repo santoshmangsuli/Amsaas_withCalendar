@@ -1,20 +1,74 @@
 define(function(require) {
 	"use strict";
 
-	var resourceViewTemplate = require('Text!../views/resourcemanager.html'), ResourceModelView = require('../model/resourceModelView'), resourceRepo = require('repository/resourceRepository'), bookingRepo = require('repository/bookingRepository'), viewResolver = require("ViewResolver"), PagedGridView = require("modules/common/model/pagedgridmodel");
+	var resourceViewTemplate = require('Text!../views/resourcemanager.html'), 
+	
+	
+	ResourceModelView = require('../model/resourceModelView'), 
+	resourceRepo = require('repository/resourceRepository'), 
+	bookingRepo = require('repository/bookingRepository'), 
+	viewResolver = require("ViewResolver"), 
+	PagedGridView = require("modules/common/model/pagedgridmodel");
 
 	var resourceController = {
-
+		resourcePagedGridView : ko.observable(''),
 		calendar : ko.observable(''),
 		resource : ko.observable(''),
 		ResourceList : ko.observableArray([ "" ]),
 		evtList : ko.observableArray([ "" ]),
 		addNewUser : function() {
 		},
+		addNewResource: function () {
+            var resourceModelView = new ResourceModelView("");
+            resourceModelView.viewModel.isSelected=true;
+            resourceModelView.viewModel.isIdEditable=true;
+            resourceModelView.viewModel.isEditable=true;
+            resourceModelView.dataModel.resourceId='';
+            resourceModelView.dataModel.resourceName='';
+            resourceModelView.dataModel.description='';
+            //resourceRepo.persistResource(resourceModelView);
+            console.log("add "+JSON.stringify(resourceModelView));
+            this.resourcePagedGridView().addNewRecord(resourceModelView);
+            //console.log("init -CONTROLLER!!");
+        },
+        saveResource: function (data) {
+        	console.log("saveResource!!"+JSON.stringify(data));
+            if (data !== "") {
+                if (data.viewModel.isIdEditable === true) {
+                    console.log("Persist to Repo"+JSON.stringify(data));
+                    data.viewModel.isEditable=false;
+                    data.viewModel.isSelected=false;
+                    resourceRepo.persistResource(data.dataModel);
+                } else if (data === "") {
+
+                } else {
+                    console.log("Updating service plan");
+                    data.viewModel.isEditable(false);
+                    resourceRepo.updateResource(data.dataModel).then(function (srvrData) {
+                        console.log(srvrData);
+                    });
+                }
+            }
+        },
+        removeResource: function (data) {
+            if (data !== "") {
+                console.log("Removing resource :" + data);
+                this.resourcePagedGridView().removeRecord(data.dataModel.resourceId);
+                resourceRepo.removeResource(data.dataModel);
+            }
+        },
 		init : function() {
 			console.log("init -CONTROLLER!!");
 			resourceRepo.getAllResourceList().then(function(data) {
 				resourceController.ResourceList(data);
+				var resourceList = $.map(data, function(item) {
+					var res = new ResourceModelView(item);
+					return res;
+				});
+				resourceController.resourcePagedGridView(new PagedGridView(
+						resourceList, [ "1", "5","10", "15" ], "5"));
+				resourceController.resourcePagedGridView().moveToFirstPage();
+
 			});
 			resourceController.resource.subscribe(function(val) {
 				if (val) {

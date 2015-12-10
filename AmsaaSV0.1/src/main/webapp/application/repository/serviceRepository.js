@@ -1,6 +1,7 @@
 define(function(require) {
 	return {
 		persistService : function(servicemodel) {
+			console.log("servicemodel"+ko.toJSON(servicemodel))
 		return	$.ajax({
 				url : "service",
 				type : "POST",

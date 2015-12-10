@@ -57,6 +57,22 @@ public class PersonRepositoryImpl_JPA implements PersonRepository
 		return entityManager.find(Person.class, personId);
 	}
 
+
+	public Person findByFlatNumber(Long flatNumber)
+	{
+		TypedQuery<Person> query = entityManager.createQuery(
+													"select P from Person P where P.persnAddress.flatNumber = :flatNumber",
+													Person.class);
+		List<Person> personList = query.setParameter("flatNumber", flatNumber.intValue()).getResultList();
+		if(personList.size() > 0 ){
+			return personList.get(0);
+		}else {
+			return new Person();
+		}
+		
+	}
+
+
 	public List<Person> findAll()
 	{
 		TypedQuery<Person> query = entityManager.createQuery(

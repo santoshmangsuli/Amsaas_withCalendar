@@ -1,0 +1,43 @@
+
+<!-- Modal -->
+
+<div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Payment Details</h4>
+		</div>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>NAME :</td>
+					<td><span data-bind="text:$root.billedPerson.persnFirstName"></span>
+						<span data-bind="text:$root.billedPerson.persnLastName"></span></td>
+				</tr>
+				<tr>
+					<td>Payment Amount</td>
+					<td><span data-bind="text:$root.billTotalAmount"></span></td>
+				</tr>
+				<tr>
+					<td>Payment Method</td>
+					<td><span data-bind="text:$root.billPayments[0].paymntMethod"></span></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<button class="btn btn-warning" data-bind="click:$root.billPayments[0].payAmount" >Submit</button>
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+		<div></div>
+
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+
+</div>
+

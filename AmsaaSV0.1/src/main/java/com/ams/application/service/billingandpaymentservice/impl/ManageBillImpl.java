@@ -10,6 +10,7 @@ import com.ams.application.service.applicationservice.ManageMail;
 import com.ams.application.service.billingandpaymentservice.ManageBill;
 import com.ams.application.service.billingandpaymentservice.assembler.BillServiceDataAssembler;
 import com.ams.application.service.billingandpaymentservice.servicedata.BillDTO;
+import com.ams.domain.model.account.Transaction;
 import com.ams.domain.model.bill.Bill;
 import com.ams.domain.model.bill.BillItem;
 import com.ams.domain.model.bill.BillSpecification;
@@ -18,6 +19,7 @@ import com.ams.domain.model.measureandunits.Period;
 import com.ams.domain.model.person.Person;
 import com.ams.domain.model.shared.DomainException;
 import com.ams.domain.repository.BillRepository;
+import com.ams.domain.repository.PaymentRepository;
 import com.ams.domain.repository.PersonRepository;
 import com.ams.domain.repository.ServiceRepository;
 
@@ -34,6 +36,8 @@ public class ManageBillImpl implements ManageBill
 	private ManageMail				manageMailService;
 	@Autowired
 	private ServiceRepository		serviceRepository;
+	@Autowired
+	private PaymentRepository		paymentRepository;
 
 	private Bill					bill;
 
@@ -47,16 +51,34 @@ public class ManageBillImpl implements ManageBill
 	public void payBill(Payment pymnt)
 	{
 		Bill bill = this.billRepository.findBill(pymnt.getPaymntForBill()
-												.getBillNumber());
+										.getBillNumber());
+		System.out.println(" bill "+bill.getBillTotalAmount()+" "+bill.getBillDate());
+		pymnt.setPaymntForBill(bill);
+		pymnt.setPaymntPerson(bill.getBilledPerson());
 		bill.makePayment(pymnt);
+		Transaction trans = new Transaction();
+		trans.setTransPerson(bill.getBilledPerson());
+		trans.setTransType("CR");
+		trans.setTransAmount(pymnt.getPaymntAmount().floatValue());
+		trans.setTransDate(pymnt.getPaymntDate());
+		trans.setTransMode("ONLINE");
+//		Account acc = new Account();
+//		acc.set
+//		//trans.setTransAccount(transAccount);
+		pymnt.setPaymntTransaction(trans);
+		
+		
 		this.billRepository.updateBill(bill);
+		//this.paymentRepository.createPayment(pymnt);
 
-		String billPaymntSuccessMessage = manageMailService.getMailTemplate("BILL_PAYMENT_SUCCESS", bill.getBillNumber(),
+		/*
+		 * String billPaymntSuccessMessage = manageMailService.getMailTemplate("BILL_PAYMENT_SUCCESS", bill.getBillNumber(),
 																pymnt.getPaymntAmount());
 
 		String mailToParty = bill.getBilledPerson().getPersnDetail()
 							.getEmailId();
 		manageMailService.sendMail(mailToParty, BillSpecification.sourceEmailId, billPaymntSuccessMessage);
+		*/
 	}
 
 	public Bill removeBillItem(Bill bill, String srvcCode)
@@ -128,5 +150,9 @@ public class ManageBillImpl implements ManageBill
 	public List<Bill> getUnpaidBills()
 	{
 		return billRepository.findBillsByPaymentStatus();
+	}
+	
+	public List<Payment> getPaymentsbyDateRange(){
+		return billRepository.findPayments();
 	}
 }

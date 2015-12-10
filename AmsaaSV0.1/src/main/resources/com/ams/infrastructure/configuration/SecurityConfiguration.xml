@@ -4,20 +4,34 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	<bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" /> 
 	<security:http>
 		<security:intercept-url pattern="/login.jsp"
 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<security:intercept-url pattern="/AMS-REST/*" access="ROLE_USER" />
+		
+		<security:intercept-url pattern="/AMS-REST/*" access="ROLE_ADMIN,ROLE_USER" />
 		<security:form-login login-page="/login.jsp"
 			always-use-default-target="true" default-target-url="/AMS-REST/index.action" />
 		<security:logout />
 	</security:http>
-	<security:authentication-manager>
+	<!-- <security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
 				<security:user name="rags1980" password="abc"
 					authorities="ROLE_USER" />
+			<security:user name="san1980" password="def"
+					authorities="ROLE_ADMIN" />
 			</security:user-service>
 		</security:authentication-provider>
-	</security:authentication-manager>
+	</security:authentication-manager> -->
+	<!-- Select users and user_roles from database-->
+	<security:authentication-manager>
+	  <security:authentication-provider>
+		<security:jdbc-user-service data-source-ref="myDataSource"
+		  users-by-username-query=
+		    "select username,password, enabled from users where username=?"
+		  authorities-by-username-query=
+		    "select username, role from user_roles where username =?  " />
+	  </security:authentication-provider>
+	</security:authentication-manager> 
 </beans>

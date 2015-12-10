@@ -9,16 +9,18 @@
 				<th>Bill Date</th>
 				<th>Bill Due Date</th>
 				<th>Status</th>
+				<th>Action</th>
 			</tr>
 		</thead>
-		<tbody data-bind="foreach:billPagedGridView().pagedRecordList">
 			<tr>
+		<tbody data-bind="foreach:billPagedGridView().pagedRecordList">
 				<td data-bind="text:$index()+1"></td>
-				<td> <span data-bind="text:persnFirstName"></span><span data-bind="text:persnLastName"></span></td>
+				<td> <span data-bind="text:persnFirstName"></span>  <span data-bind="text:persnLastName"></span></td>
 				<td> <span data-bind="text:flatNumber"></span></td>
 				<td> <span data-bind="text:billDate"></span></td>
 				<td> <span data-bind="text:billDueDate"></span></td>
 				<td> <span data-bind="text:billPaymentStatus"></span></td>
+				<td><button type="button" class="btn btn-warning" id="payBtn" data-toggle="modal" data-target="#myModal" data-bind="click:showModal">Pay</button></td>
 			</tr>
 			</tbody>
 			<tbody>
@@ -50,5 +52,7 @@
 					</tr>
 		</tbody>
 	</table>
-
+	
+	<div class="modal fade" id="myModal" role="dialog" >	  
+	</div>
 </div>

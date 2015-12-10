@@ -1,5 +1,6 @@
 package com.ams.infrastructure.persistance.jpa;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ams.application.common.Utility;
 import com.ams.domain.model.bill.Bill;
 import com.ams.domain.model.bill.Payment;
 import com.ams.domain.repository.BillRepository;
@@ -31,7 +33,7 @@ public class BillRepositoryImpl_JPA implements BillRepository
 
 	public long updateBill(Bill bill)
 	{
-		entityManager.persist(bill);
+		entityManager.merge(bill);
 		return 0;
 	}
 
@@ -70,14 +72,29 @@ public class BillRepositoryImpl_JPA implements BillRepository
 		return billList;
 	}
 
+	@Override
 	public Payment findPayment(long paymntNumber)
+	{
+		
+		return null;
+	}
+
+	@Override
+	public Set<Payment> findPayments(long billNumber)
 	{
 		return null;
 	}
 
-	public Set<Payment> findPayments(long billNumber)
+	@Override
+	public List<Payment> findPayments()
 	{
-		return null;
+		Query query = entityManager.createQuery("select p from Payment p where p.paymntDate between ? and ?");
+		
+		query.setParameter(1, Utility.getStartDate());
+		query.setParameter(2, Utility.getEndDate());
+		List<Payment> paymentsList = query.getResultList();
+
+		return paymentsList;
 	}
 
 }

@@ -38,6 +38,84 @@
 
 
 		</div>
-		<div id="resMgr1"></div>
+		<div id="resMgr1" class="tab-pane">
+		<table id="srvcMgrTable" class="gridTable table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Resource #</th>
+						<th>Name</th>
+						<th>description</th>
+						<th colspan="3">Action</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach:resourcePagedGridView().pagedRecordList">
+					<tr>
+						<td>
+						<input
+							data-bind='value:dataModel.resourceId,hasFocus:viewModel.isSelected,enable:viewModel.isIdEditable'></input>
+						</td>
+						<td>
+						<input
+							data-bind='value:dataModel.resourceName,hasFocus:viewModel.isSelected,enable:viewModel.isEditable'></input>
+						</td>
+						<td>
+						<input
+							data-bind='value:dataModel.description,hasFocus:viewModel.isSelected,enable:viewModel.isEditable'></input>
+						</td>
+						<td>
+							<button id="edit" data-bind="click:viewModel.isEditable"
+								title="Edit">
+								<span class="icon-edit" data-bind="visible:viewModel.isEditable"></span>
+								<span class="icon-folder-close"
+									data-bind="visible:!viewModel.isEditable"></span>
+							</button></td>
+						<td><button id="save" data-bind="click:$parent.saveResource"
+								title="Save changes!">
+								<span class="icon-ok"></span>
+							</button>
+						</td>
+						<td>
+							<button data-bind="click:$parent.removeResource">Delete</button>
+						</td>
+
+					</tr>
+				</tbody>
+				<tbody>
+				    <tr>
+        				<td colspan="7">
+            				<button data-bind="click:addNewResource" title="Add new Resource"
+                    			class="btn btn-success">Add Resource
+            				</button>
+        				</td>
+    				</tr>				
+					<tr>
+						<td colspan="7">Records/Page:<select id="records"
+							data-bind="options:resourcePagedGridView().pageRecordOption,value:resourcePagedGridView().chosenPageRecord"></select>
+							<button id="firstPage"
+								data-bind="click:resourcePagedGridView().moveToFirstPage"
+								title="Go to first page">
+								<span class="icon-fast-backward"></span>
+							</button>
+							<button id="prevPage"
+								data-bind="click:resourcePagedGridView().moveToPrevPage"
+								title="Go to prev page">
+								<span class="icon-step-backward"></span>
+							</button> Page:<span data-bind="text:resourcePagedGridView().currentPageNo"></span>
+							/<span data-bind="text:resourcePagedGridView().noOfPages"></span>
+							<button id="nextPage"
+								data-bind="click:resourcePagedGridView().moveToNextPage"
+								title="Go to next page">
+								<span class="icon-step-forward"></span>
+							</button>
+							<button id="lastPage"
+								data-bind="click:resourcePagedGridView().moveToLastPage"
+								title="Go to last page">
+								<span class="icon-fast-forward"></span>
+							</button></td>
+					</tr>
+				</tbody>
+				
+		</table>
+		</div>
 	</div>
 </div>

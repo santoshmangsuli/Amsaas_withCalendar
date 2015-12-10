@@ -32,6 +32,16 @@ define(function(require) {
 
 		getBillDetails : function() {
 			return $.getJSON("BillDetails"); 
+		},
+		
+		payBill : function(payModel){
+			console.log("payBill"+ko.toJSON(payModel));
+			return	$.ajax({
+			url : "Payment",
+			type : "POST",
+			data :ko.toJSON(payModel),
+			dataType : "json",
+			contentType : "application/json; charset=utf-8"});	
 		}
 		
 

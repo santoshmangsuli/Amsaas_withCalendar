@@ -3,7 +3,7 @@ define(function(require) {
 	var customerModelView = function() {
 		var that = this;
 		that.chosenFlatNumber = ko.observable("");
-		
+		that.persnId = ko.observable("");
 		that.customer = ko.observable("");
 		that.persnFirstName = ko.observable("");
 		that.persnLastName = ko.observable("");
@@ -14,14 +14,16 @@ define(function(require) {
 		that.getCustomerFromList = function(data) {
 			try {
 				var userdata = {
-						persnId : data.chosenFlatNumber()
+						persnId : data.chosenFlatNumber(),
+						persnFlatNum : data.chosenFlatNumber()
 				};
 				console.log("userdata "+ko.toJSON(userdata));
 				var retCust = null;
-				userRepo.getUserById(userdata).then(
+				userRepo.getUserByFlatNum(userdata).then(
 						function(custdata){
 							console.log("custdata "+ko.toJSON(custdata));
-							that.customer(custdata); 
+							that.customer(custdata);
+							that.persnId(custdata.persnId);
 							that.persnFirstName(custdata.persnFirstName);
 							that.persnLastName(custdata.persnLastName);
 							that.landLineNumber(custdata.persnDetail.landLineNumber);

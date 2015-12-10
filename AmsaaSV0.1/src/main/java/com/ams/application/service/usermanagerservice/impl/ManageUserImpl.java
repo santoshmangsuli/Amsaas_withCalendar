@@ -53,5 +53,12 @@ public class ManageUserImpl implements ManageUser
 		return users;
 
 	}
+	
+
+	public Person getUserDetailsByFlatNumber(long flatNumber)
+	{
+		Person user = personRepository.findByFlatNumber(flatNumber);
+		return user;
+	}
 
 }

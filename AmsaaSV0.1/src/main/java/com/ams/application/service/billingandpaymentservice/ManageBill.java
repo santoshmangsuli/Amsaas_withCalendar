@@ -17,5 +17,7 @@ public interface ManageBill
 	void payBill(Payment paymnt);
 
 	List<Bill> getUnpaidBills();
+	
+	List<Payment> getPaymentsbyDateRange();
 
 }

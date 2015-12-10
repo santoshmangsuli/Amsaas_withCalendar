@@ -67,4 +67,11 @@ public class PersonRepositoryImpl_Hibernate implements PersonRepository
 		return null;
 	}
 
+	@Override
+	public Person findByFlatNumber(Long flatNumber)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

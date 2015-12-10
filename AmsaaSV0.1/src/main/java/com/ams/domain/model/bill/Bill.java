@@ -14,6 +14,7 @@ import javax.persistence.Access;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -234,8 +235,7 @@ public class Bill implements Serializable
 		return billPeriod;
 	}
 
-	@OneToMany(mappedBy = "paymntForBill",targetEntity = Payment.class,orphanRemoval = true,
-				cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "paymntForBill",cascade =CascadeType.MERGE)
 	public Collection<Payment> getBillPayments()
 	{
 		return billPayments;
@@ -266,5 +266,5 @@ public class Bill implements Serializable
 	{
 		this.billPaymentRegister = billPaymentRegister;
 	}
-
+	
 }

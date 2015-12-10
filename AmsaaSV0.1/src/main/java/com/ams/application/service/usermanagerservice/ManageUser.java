@@ -17,4 +17,6 @@ public interface ManageUser
 
 	public List<Person> getAllUsers() throws ServiceException;
 
+	public Person getUserDetailsByFlatNumber(long flatNumber);
+
 }

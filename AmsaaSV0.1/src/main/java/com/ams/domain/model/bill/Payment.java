@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.ams.domain.model.account.Transaction;
 import com.ams.domain.model.person.Person;
 
@@ -79,7 +81,8 @@ public class Payment implements Serializable
 		this.paymntDate = paymntDate;
 	}
 
-	@OneToOne(cascade = CascadeType.PERSIST,optional = false)
+	@OneToOne(cascade = CascadeType.MERGE,optional = false)
+	@JsonIgnore
 	public Transaction getPaymntTransaction()
 	{
 		return this.paymntTransaction;
@@ -90,8 +93,9 @@ public class Payment implements Serializable
 		this.paymntTransaction = paymntTransaction;
 	}
 
-	@ManyToOne(optional = false,cascade = CascadeType.ALL)
+	@ManyToOne(optional = false,cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "Bill_Number")
+	@JsonIgnore
 	public Bill getPaymntForBill()
 	{
 		return this.paymntForBill;
@@ -104,6 +108,7 @@ public class Payment implements Serializable
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "Person_Id")
+	@JsonIgnore
 	public Person getPaymntPerson()
 	{
 		return this.paymntPerson;

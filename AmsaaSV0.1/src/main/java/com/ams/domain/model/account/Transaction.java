@@ -94,7 +94,7 @@ public class Transaction implements Serializable
 		this.transAccount = transAccount;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "Account_Number")
 	public Account getTransAccount()
 	{

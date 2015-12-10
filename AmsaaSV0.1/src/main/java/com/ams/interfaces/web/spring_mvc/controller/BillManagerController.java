@@ -2,6 +2,7 @@ package com.ams.interfaces.web.spring_mvc.controller;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import com.ams.application.common.ServiceException;
 import com.ams.application.service.billingandpaymentservice.ManageBill;
 import com.ams.application.service.billingandpaymentservice.servicedata.BillDTO;
 import com.ams.domain.model.bill.Bill;
+import com.ams.domain.model.bill.Payment;
 
 @Controller
 public class BillManagerController
@@ -75,4 +77,27 @@ public class BillManagerController
 		return billingService.getUnpaidBills();
 
 	}
+
+	@RequestMapping(value = "/Payment",method = RequestMethod.POST)
+	@ResponseBody
+	public String payBill(@RequestBody final Payment pymnt)
+	{
+		System.out.println("calling payBill");
+		billingService.payBill(pymnt);
+		return "SUCCESS";
+	}
+
+	
+	@RequestMapping("Payments")
+	@ResponseBody
+	public List<Payment> getPayments() throws ServiceException
+	{
+		System.out.println("calling Payments");
+		List<Payment> payList = billingService.getPaymentsbyDateRange();
+		System.out.println("Payments Size "+payList.size());
+		return payList;
+
+	}
+
+
 }

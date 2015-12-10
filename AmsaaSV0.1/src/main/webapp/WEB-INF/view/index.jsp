@@ -14,7 +14,7 @@
 <title>AmsaaS</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width-device-width,initial-scale=1.0" />
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/lib/bootstrap/img/leaf.ico" />
 
@@ -205,8 +205,10 @@
 			<div class="row">
 				<div class="span12">
 					<div class="tab-content">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<div class="tab-pane active" id="people"></div>
 						<div class="tab-pane" id="finances"></div>
+					</sec:authorize>
 						<div class="tab-pane" id="billpayments">
 							<div id="billNPaymentManagerTabs" class="tabbable">
 								<ul class="nav nav-tabs">

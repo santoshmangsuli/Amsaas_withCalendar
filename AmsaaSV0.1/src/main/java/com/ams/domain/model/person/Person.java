@@ -123,7 +123,7 @@ public class Person implements Serializable
 		this.persnAccounts = accounts;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "acntHolder",targetEntity = Account.class,fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.MERGE,mappedBy = "acntHolder",targetEntity = Account.class,fetch = FetchType.LAZY)
 	public Collection<Account> getPersnAccounts()
 	{
 		return persnAccounts;

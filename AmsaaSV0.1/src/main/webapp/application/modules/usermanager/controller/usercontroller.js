@@ -13,10 +13,11 @@ define(function(require) {
 		userPagedGridView : ko.observable(''),
 		UserModelView : new UserModelView(null),
 		addNewUser : function() {
-			console.log("data "+JSON.stringify(this.UserModelView.dataModel.persnFirstName()));
+			console.log("data "+JSON.stringify(this.UserModelView.dataModel.persnRoles));
 			var data = {
 		            	persnFirstName : this.UserModelView.dataModel.persnFirstName(), 
 		            	persnLastName : this.UserModelView.dataModel.persnLastName(),
+		            	persnRoles  :  [this.UserModelView.dataModel.persnRoles],
 		            	persnDetail : {
 		            		landLineNumber : this.UserModelView.dataModel.persnPhoneNum(),
 		            		mobileNumber : this.UserModelView.dataModel.persnMobileNum(),
@@ -89,6 +90,7 @@ define(function(require) {
 							persnId : data.dataModel.persnId(),
 			            	persnFirstName : data.dataModel.persnFirstName(), 
 			            	persnLastName : data.dataModel.persnLastName(),
+			            	persnRoles  :  data.dataModel.persnRoles(),
 			            	persnDetail : {
 			            		landLineNumber : data.dataModel.persnPhoneNum(),
 			            		mobileNumber : data.dataModel.persnMobileNum(),

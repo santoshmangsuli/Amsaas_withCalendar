@@ -55,7 +55,12 @@ public class ServiceCharge implements Serializable
 	private Service			chargeForService;
 	private Person				chargedPerson;
 	private ServiceUsage		srvcUsage;
-	private boolean			billed;
+	
+	private enum Billed { 
+		    TRUE, FALSE; 
+		}
+
+	private Billed			billed;
 
 	/*
 	 * SERVICE CHARGE DOMAIN FUNCTIONS
@@ -257,12 +262,12 @@ public class ServiceCharge implements Serializable
 	}
 
 	@Enumerated(EnumType.STRING)
-	public boolean isBilled()
+	public Billed isBilled()
 	{
 		return billed;
 	}
 
-	public void setBilled(boolean billed)
+	public void setBilled(Billed billed)
 	{
 		this.billed = billed;
 	}
